@@ -1,0 +1,47 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HTCVive", "Launchers\Windows\HTCVive.csproj", "{8F3605A3-8720-48F7-8799-A33CD4ACCB97}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "HTCViveSource", "SharedSource\Main\HTCViveSource.shproj", "{846D34C8-E537-4DC7-B646-CFF649CE42E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WaveEngine.OpenVR", "WaveEngine.OpenVR\WaveEngine.OpenVR.csproj", "{96A4951F-82CC-4FFE-AB58-1C9E81CC0B2D}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "WaveEngine.OpenVR.Shared", "WaveEngine.OpenVR.Shared\WaveEngine.OpenVR.Shared.shproj", "{78A89827-7863-44A7-8C6A-FE7A3F20036C}"
+EndProject
+Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		WaveEngine.OpenVR.Shared\WaveEngine.OpenVR.Shared.projitems*{78a89827-7863-44a7-8c6a-fe7a3f20036c}*SharedItemsImports = 13
+		SharedSource\Main\HTCViveSource.projitems*{846d34c8-e537-4dc7-b646-cff649ce42e4}*SharedItemsImports = 13
+		SharedSource\Main\HTCViveSource.projitems*{8f3605a3-8720-48f7-8799-a33cd4accb97}*SharedItemsImports = 4
+		WaveEngine.OpenVR.Shared\WaveEngine.OpenVR.Shared.projitems*{96a4951f-82cc-4ffe-ab58-1c9e81cc0b2d}*SharedItemsImports = 4
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8F3605A3-8720-48F7-8799-A33CD4ACCB97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F3605A3-8720-48F7-8799-A33CD4ACCB97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F3605A3-8720-48F7-8799-A33CD4ACCB97}.Debug|x64.ActiveCfg = Debug|x64
+		{8F3605A3-8720-48F7-8799-A33CD4ACCB97}.Debug|x64.Build.0 = Debug|x64
+		{8F3605A3-8720-48F7-8799-A33CD4ACCB97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F3605A3-8720-48F7-8799-A33CD4ACCB97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F3605A3-8720-48F7-8799-A33CD4ACCB97}.Release|x64.ActiveCfg = Release|x64
+		{8F3605A3-8720-48F7-8799-A33CD4ACCB97}.Release|x64.Build.0 = Release|x64
+		{96A4951F-82CC-4FFE-AB58-1C9E81CC0B2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96A4951F-82CC-4FFE-AB58-1C9E81CC0B2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96A4951F-82CC-4FFE-AB58-1C9E81CC0B2D}.Debug|x64.ActiveCfg = Debug|x64
+		{96A4951F-82CC-4FFE-AB58-1C9E81CC0B2D}.Debug|x64.Build.0 = Debug|x64
+		{96A4951F-82CC-4FFE-AB58-1C9E81CC0B2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96A4951F-82CC-4FFE-AB58-1C9E81CC0B2D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96A4951F-82CC-4FFE-AB58-1C9E81CC0B2D}.Release|x64.ActiveCfg = Release|x64
+		{96A4951F-82CC-4FFE-AB58-1C9E81CC0B2D}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

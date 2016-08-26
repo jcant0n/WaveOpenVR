@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>78a89827-7863-44a7-8c6a-fe7a3f20036c</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>WaveEngine.OpenVR.Shared</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)NativeLibrary.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)openvr_api.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SteamVRService.cs" />
+  </ItemGroup>
+</Project>
