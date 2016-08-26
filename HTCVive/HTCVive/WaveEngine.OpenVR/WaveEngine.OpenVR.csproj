@@ -56,9 +56,9 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="WaveEngine.Common, Version=2.2.1.0, Culture=neutral, PublicKeyToken=6e72eaf7d6c3c55b, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\WaveEngine\v2.0\Lib\Windows\WaveEngine.Common.dll</HintPath>
+    <Reference Include="WaveEngine.Common, Version=2.2.2.0, Culture=neutral, PublicKeyToken=6e72eaf7d6c3c55b, processorArchitecture=MSIL">
+      <HintPath>..\packages\WaveEngine.Common.2.2.2-alpha-20160825-317\lib\net45\WaveEngine.Common.dll</HintPath>
+      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -67,6 +67,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Libs\x64\openvr_api.dll" />
     <EmbeddedResource Include="Libs\x86\openvr_api.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="..\WaveEngine.OpenVR.Shared\WaveEngine.OpenVR.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
