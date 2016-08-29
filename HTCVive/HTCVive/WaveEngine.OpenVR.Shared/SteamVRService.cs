@@ -11,13 +11,53 @@
 using System;
 using WaveEngine.Common;
 using System.Diagnostics;
+using Valve.VR;
 #endregion
 
 namespace WaveEngine.OpenVR.Shared
 {
-    public class SteamVRService : Service
+    public class SteamVRService : UpdatableService
     {
-        private Valve.VR.CVRSystem hmd;
+        internal static CVRSystem hmd;
+        private Device[] devices;
+
+        #region Properties
+        public CVRSystem HMD
+        {
+            get
+            {
+                return hmd;
+            }
+        }
+
+        //public uint LeftHandIndex
+        //{
+        //    get
+        //    {
+        //        uint index = 0;
+        //        if (hmd != null)
+        //        {
+        //            index = hmd.GetTrackedDeviceIndexForControllerRole(ETrackedControllerRole.LeftHand);
+        //        }
+
+        //        return index;
+        //    }
+        //}
+
+        //public uint LeftHandIndex
+        //{
+        //    get
+        //    {
+        //        uint index = 0;
+        //        if (hmd != null)
+        //        {
+        //            index = hmd.GetTrackedDeviceIndexForControllerRole(ETrackedControllerRole.LeftHand);
+        //        }
+
+        //        return index;
+        //    }
+        //}
+        #endregion
 
         #region Initialize
         public SteamVRService()
@@ -27,7 +67,14 @@ namespace WaveEngine.OpenVR.Shared
         #endregion
 
         #region Public Methods
-        public Valve.VR.CVRSystem HMD { get; set; }
+
+        public override void Update(TimeSpan gameTime)
+        {
+            for (int i = 0; i < Valve.VR.OpenVR.k_unMaxTrackedDeviceCount; i++)
+            {
+                this.devices[i].Update();
+            }
+        }
         #endregion
 
         #region Private Methods
@@ -35,13 +82,24 @@ namespace WaveEngine.OpenVR.Shared
         {
             base.Initialize();
 
-            var error = Valve.VR.EVRInitError.None;
+            var error = EVRInitError.None;
 
             hmd = Valve.VR.OpenVR.Init(ref error);
-            if (error != Valve.VR.EVRInitError.None)
+            if (error != EVRInitError.None)
             {
                 ReportError(error);
                 Valve.VR.OpenVR.Shutdown();
+            }
+
+            // Initialize devices
+            if (devices == null)
+            {
+                devices = new Device[Valve.VR.OpenVR.k_unMaxTrackedDeviceCount];
+
+                for (uint i = 0; i < devices.Length; i++)
+                {
+                    devices[i] = new Device(i);
+                }
             }
         }
 
@@ -51,19 +109,19 @@ namespace WaveEngine.OpenVR.Shared
             Valve.VR.OpenVR.Shutdown();
         }
 
-        private void ReportError(Valve.VR.EVRInitError error)
+        private void ReportError(EVRInitError error)
         {
             switch (error)
             {
-                case Valve.VR.EVRInitError.None:
+                case EVRInitError.None:
                     break;
-                case Valve.VR.EVRInitError.VendorSpecific_UnableToConnectToOculusRuntime:
+                case EVRInitError.VendorSpecific_UnableToConnectToOculusRuntime:
                     Debug.WriteLine("SteamVR Initialization Failed!  Make sure device is on, Oculus runtime is installed, and OVRService_*.exe is running.");
                     break;
-                case Valve.VR.EVRInitError.Init_VRClientDLLNotFound:
+                case EVRInitError.Init_VRClientDLLNotFound:
                     Debug.WriteLine("SteamVR drivers not found!  They can be installed via Steam under Library > Tools.  Visit http://steampowered.com to install Steam.");
                     break;
-                case Valve.VR.EVRInitError.Driver_RuntimeOutOfDate:
+                case EVRInitError.Driver_RuntimeOutOfDate:
                     Debug.WriteLine("SteamVR Initialization Failed!  Make sure device's runtime is up to date.");
                     break;
                 default:
