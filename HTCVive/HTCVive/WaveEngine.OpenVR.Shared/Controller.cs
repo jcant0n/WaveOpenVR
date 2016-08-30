@@ -1,6 +1,6 @@
 ﻿#region File Description
 //-----------------------------------------------------------------------------
-// Device
+// Controller
 //
 // Copyright © 2016 Wave Engine S.L. All rights reserved.
 // Use is subject to license terms.
@@ -16,7 +16,7 @@ using WaveEngine.Common.Math;
 
 namespace WaveEngine.OpenVR.Shared
 {
-    public class Device
+    public class Controller
     {
         public float hairTriggerDelta = 0.1f; // amount trigger must be pulled or released to change state
         float hairTriggerLimit;
@@ -25,6 +25,7 @@ namespace WaveEngine.OpenVR.Shared
         VRControllerState_t currentState, prevState;
         TrackedDevicePose_t pose;
         int previousFrameCount = -1;
+        Matrix transform;
 
         #region Properties
         public uint Index { get; private set; }
@@ -122,12 +123,39 @@ namespace WaveEngine.OpenVR.Shared
                 return this.pose;
             }
         }
+
+        public Matrix WorldTransform
+        {
+            get
+            {
+                this.Update();
+                var pose = this.pose.mDeviceToAbsoluteTracking;
+
+                this.transform.M11 = pose.m0;
+                this.transform.M12 = pose.m1;
+                this.transform.M13 = -pose.m2;
+                this.transform.M14 = pose.m3;
+
+                this.transform.M21 = pose.m4;
+                this.transform.M22 = pose.m5;
+                this.transform.M23 = -pose.m6;
+                this.transform.M24 = pose.m7;
+
+                this.transform.M31 = -pose.m8;
+                this.transform.M32 = -pose.m9;
+                this.transform.M33 = pose.m10;
+                this.transform.M34 = -pose.m11;
+
+                return this.transform;
+            }
+        }
         #endregion
 
         #region Initialize
-        public Device(uint i)
+        public Controller(uint i)
         {
             this.Index = i;
+            this.transform = new Matrix();
         }
 
         #endregion

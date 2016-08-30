@@ -10,7 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)ButtonMask.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Device.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controller.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NativeLibrary.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)openvr_api.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SteamVRService.cs" />

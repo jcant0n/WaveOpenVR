@@ -18,8 +18,8 @@ namespace WaveEngine.OpenVR.Shared
 {
     public class SteamVRService : UpdatableService
     {
+        public Controller[] Controllers;
         internal static CVRSystem hmd;
-        private Device[] devices;
 
         #region Properties
         public CVRSystem HMD
@@ -30,33 +30,37 @@ namespace WaveEngine.OpenVR.Shared
             }
         }
 
-        //public uint LeftHandIndex
-        //{
-        //    get
-        //    {
-        //        uint index = 0;
-        //        if (hmd != null)
-        //        {
-        //            index = hmd.GetTrackedDeviceIndexForControllerRole(ETrackedControllerRole.LeftHand);
-        //        }
+        public Controller LeftHand
+        {
+            get
+            {
+                if (hmd != null)
+                {
+                    uint index = 0;
+                    index = hmd.GetTrackedDeviceIndexForControllerRole(ETrackedControllerRole.LeftHand);
 
-        //        return index;
-        //    }
-        //}
+                    return Controllers[index];
+                }
 
-        //public uint LeftHandIndex
-        //{
-        //    get
-        //    {
-        //        uint index = 0;
-        //        if (hmd != null)
-        //        {
-        //            index = hmd.GetTrackedDeviceIndexForControllerRole(ETrackedControllerRole.LeftHand);
-        //        }
+                return null;
+            }
+        }
 
-        //        return index;
-        //    }
-        //}
+        public Controller RightHand
+        {
+            get
+            {
+                if (hmd != null)
+                {
+                    uint index = 0;
+                    index = hmd.GetTrackedDeviceIndexForControllerRole(ETrackedControllerRole.RightHand);
+
+                    return Controllers[index];
+                }
+
+                return null;
+            }
+        }
         #endregion
 
         #region Initialize
@@ -72,7 +76,7 @@ namespace WaveEngine.OpenVR.Shared
         {
             for (int i = 0; i < Valve.VR.OpenVR.k_unMaxTrackedDeviceCount; i++)
             {
-                this.devices[i].Update();
+                this.Controllers[i].Update();
             }
         }
         #endregion
@@ -92,13 +96,13 @@ namespace WaveEngine.OpenVR.Shared
             }
 
             // Initialize devices
-            if (devices == null)
+            if (Controllers == null)
             {
-                devices = new Device[Valve.VR.OpenVR.k_unMaxTrackedDeviceCount];
+                Controllers = new Controller[Valve.VR.OpenVR.k_unMaxTrackedDeviceCount];
 
-                for (uint i = 0; i < devices.Length; i++)
+                for (uint i = 0; i < Controllers.Length; i++)
                 {
-                    devices[i] = new Device(i);
+                    Controllers[i] = new Controller(i);
                 }
             }
         }
