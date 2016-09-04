@@ -18,7 +18,12 @@ namespace HTCVive
     {
         protected override void CreateScene()
         {
-            this.Load(WaveContent.Scenes.MyScene);           
+            this.Load(WaveContent.Scenes.MyScene);
+
+            Entity e = new Entity()
+                            .AddComponent(new DrawVideo());
+
+            EntityManager.Add(e);
         }
     }
 }

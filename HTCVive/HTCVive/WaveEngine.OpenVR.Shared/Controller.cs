@@ -13,6 +13,7 @@
 using System;
 using Valve.VR;
 using WaveEngine.Common.Math;
+using WaveEngine.Framework.Services;
 
 namespace WaveEngine.OpenVR.Shared
 {
@@ -26,6 +27,7 @@ namespace WaveEngine.OpenVR.Shared
         TrackedDevicePose_t pose;
         int previousFrameCount = -1;
         Matrix transform;
+        Clock clockService;
 
         #region Properties
         public uint Index { get; private set; }
@@ -156,6 +158,7 @@ namespace WaveEngine.OpenVR.Shared
         {
             this.Index = i;
             this.transform = new Matrix();
+            this.clockService = WaveServices.Clock;
         }
 
         #endregion
@@ -164,11 +167,16 @@ namespace WaveEngine.OpenVR.Shared
 
         public void Update()
         {
-            // TimeCount
-            if (SteamVRService.hmd != null)
+            if (clockService.FrameCount != previousFrameCount)
             {
-                Valid = SteamVRService.hmd.GetControllerStateWithPose(ETrackingUniverseOrigin.TrackingUniverseStanding, Index, ref this.currentState, ref this.pose);
-                UpdateHairTrigger();
+                previousFrameCount = clockService.FrameCount;
+                prevState = currentState;
+
+                if (SteamVRService.hmd != null)
+                {
+                    Valid = SteamVRService.hmd.GetControllerStateWithPose(ETrackingUniverseOrigin.TrackingUniverseStanding, Index, ref this.currentState, ref this.pose);
+                    UpdateHairTrigger();
+                }
             }
         }
 

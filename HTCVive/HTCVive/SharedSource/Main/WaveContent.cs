@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// File generated on 30/08/2016 21:59:04
+// File generated on 04/09/2016 16:49:19
 namespace HTCVive
 {
     using System;

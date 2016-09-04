@@ -79,6 +79,11 @@ namespace WaveEngine.OpenVR.Shared
                 this.Controllers[i].Update();
             }
         }
+
+        public Controller Input(int index)
+        {
+            return Controllers[index];
+        }
         #endregion
 
         #region Private Methods
