@@ -12,6 +12,8 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -99,15 +101,21 @@
     <EmbeddedResource Include="Game.ico" />
     <EmbeddedResource Include="SplashScreen.wpk" />
   </ItemGroup>
-  <Import Project="..\..\SharedSource\Main\HTCViveSource.projitems" Label="Shared" Condition="Exists('..\..\SharedSource\Main\HTCViveSource.projitems')" />
+  <ItemGroup>
+    <None Include="packages.config" />
+    <Content Include="WaveEngine.targets">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\WaveEngine.OpenVR\WaveEngine.OpenVR.csproj">
+      <Project>{96a4951f-82cc-4ffe-ab58-1c9e81cc0b2d}</Project>
+      <Name>WaveEngine.OpenVR</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="..\..\SharedSource\Main\HTCViveSource.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\..\packages\WaveEngine.2.2.2-alpha-20160825-317\build\net45\WaveEngine.targets" Condition="Exists('..\..\packages\WaveEngine.2.2.2-alpha-20160825-317\build\net45\WaveEngine.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\WaveEngine.2.2.2-alpha-20160825-317\build\net45\WaveEngine.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\WaveEngine.2.2.2-alpha-20160825-317\build\net45\WaveEngine.targets'))" />
-  </Target>
+  <Import Project="WaveEngine.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

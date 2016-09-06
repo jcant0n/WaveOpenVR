@@ -9,8 +9,8 @@
     <Import_RootNamespace>HTCVive</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)ControllerBehavior.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Display.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)DrawVideo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MyScene.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)WaveContent.cs" />

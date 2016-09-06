@@ -14,7 +14,7 @@ namespace HTCVive
             this.Height = 720;
             this.FullScreen = false;
             this.WindowTitle = "HTCVive";
-            this.HasVideoSupport = false;
+            this.HasVideoSupport = true;
         }
 
         public override void Initialize()

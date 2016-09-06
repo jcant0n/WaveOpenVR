@@ -18,12 +18,25 @@ namespace HTCVive
     {
         protected override void CreateScene()
         {
+            WaveServices.ScreenContextManager.SetDiagnosticsActive(true);
+
             this.Load(WaveContent.Scenes.MyScene);
 
-            Entity e = new Entity()
-                            .AddComponent(new DrawVideo());
+            WaveServices.CameraCapture.Start(WaveEngine.Common.Media.CameraCaptureType.Front);
+            var texture = WaveServices.CameraCapture.PreviewTexture;
 
-            EntityManager.Add(e);
+            Entity sprite = new Entity()
+                                .AddComponent(new Transform2D()
+                                {
+                                    XScale = (float)this.VirtualScreenManager.VirtualWidth / (float)texture.Width,
+                                    YScale = (float)this.VirtualScreenManager.VirtualHeight / (float)texture.Height,
+                                })
+                                .AddComponent(new Sprite(texture))
+                                .AddComponent(new SpriteRenderer(DefaultLayers.Opaque));
+            EntityManager.Add(sprite);
+
+            Entity virtualCamera = EntityManager.Find("VirtualCamera");
+            virtualCamera.AddComponent(new ControllerBehavior());
         }
     }
 }

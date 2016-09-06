@@ -11,7 +11,7 @@
 using Valve.VR;
 #endregion
 
-namespace WaveEngine.OpenVR.Shared
+namespace WaveEngine.OpenVR
 {
     public class ButtonMask
     {

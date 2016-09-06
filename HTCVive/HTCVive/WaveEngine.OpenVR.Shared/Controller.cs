@@ -15,7 +15,7 @@ using Valve.VR;
 using WaveEngine.Common.Math;
 using WaveEngine.Framework.Services;
 
-namespace WaveEngine.OpenVR.Shared
+namespace WaveEngine.OpenVR
 {
     public class Controller
     {

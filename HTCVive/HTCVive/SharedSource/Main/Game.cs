@@ -4,6 +4,7 @@ using WaveEngine.Common;
 using WaveEngine.Common.Graphics;
 using WaveEngine.Framework;
 using WaveEngine.Framework.Services;
+using WaveEngine.OpenVR;
 #endregion
 
 namespace HTCVive
@@ -16,6 +17,8 @@ namespace HTCVive
 
 			ScreenContext screenContext = new ScreenContext(new MyScene());	
 			WaveServices.ScreenContextManager.To(screenContext);
+
+            //WaveServices.RegisterService<SteamVRService>(new SteamVRService());
         }
     }
 }

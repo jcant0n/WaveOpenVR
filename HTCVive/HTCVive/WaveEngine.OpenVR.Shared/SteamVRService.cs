@@ -14,7 +14,7 @@ using System.Diagnostics;
 using Valve.VR;
 #endregion
 
-namespace WaveEngine.OpenVR.Shared
+namespace WaveEngine.OpenVR
 {
     public class SteamVRService : UpdatableService
     {
