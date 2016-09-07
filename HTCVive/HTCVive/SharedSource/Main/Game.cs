@@ -18,7 +18,7 @@ namespace HTCVive
 			ScreenContext screenContext = new ScreenContext(new MyScene());	
 			WaveServices.ScreenContextManager.To(screenContext);
 
-            //WaveServices.RegisterService<SteamVRService>(new SteamVRService());
+            WaveServices.RegisterService<SteamVRService>(new SteamVRService());
         }
     }
 }

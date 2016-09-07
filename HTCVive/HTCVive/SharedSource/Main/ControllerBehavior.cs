@@ -33,15 +33,19 @@ namespace HTCVive
 
         protected override void Update(TimeSpan gameTime)
         {
-            Vector3 position = steamVR.LeftHand.WorldTransform.Translation;
+            if (steamVR.RightHand != null && steamVR.RightHand.Connected)
+            {
+                Labels.Add("Right_Status", steamVR.RightHand.Connected);
+                Labels.Add("Right_Position", steamVR.RightHand.WorldTransform.Translation);
+                Labels.Add("Right_Orientation", steamVR.RightHand.WorldTransform.Orientation);
+            }
 
-            Labels.Add("Right_Status", steamVR.RightHand.Connected);
-            Labels.Add("Right_Position", steamVR.RightHand.WorldTransform.Translation);
-            Labels.Add("Right_Orientation", steamVR.RightHand.WorldTransform.Orientation);
-
-            Labels.Add("Left_Status", steamVR.LeftHand.Connected);
-            Labels.Add("Left_Position", steamVR.LeftHand.WorldTransform.Translation);
-            Labels.Add("Left_Orientation", steamVR.LeftHand.WorldTransform.Orientation);
+            if (steamVR.LeftHand != null && steamVR.LeftHand.Connected)
+            {
+                Labels.Add("Left_Status", steamVR.LeftHand.Connected);
+                Labels.Add("Left_Position", steamVR.LeftHand.WorldTransform.Translation);
+                Labels.Add("Left_Orientation", steamVR.LeftHand.WorldTransform.Orientation);
+            }
         }
     }
 }

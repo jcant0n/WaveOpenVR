@@ -22,18 +22,18 @@ namespace HTCVive
 
             this.Load(WaveContent.Scenes.MyScene);
 
-            WaveServices.CameraCapture.Start(WaveEngine.Common.Media.CameraCaptureType.Front);
-            var texture = WaveServices.CameraCapture.PreviewTexture;
+            ////WaveServices.CameraCapture.Start(WaveEngine.Common.Media.CameraCaptureType.Front);
+            ////var texture = WaveServices.CameraCapture.PreviewTexture;
 
-            Entity sprite = new Entity()
-                                .AddComponent(new Transform2D()
-                                {
-                                    XScale = (float)this.VirtualScreenManager.VirtualWidth / (float)texture.Width,
-                                    YScale = (float)this.VirtualScreenManager.VirtualHeight / (float)texture.Height,
-                                })
-                                .AddComponent(new Sprite(texture))
-                                .AddComponent(new SpriteRenderer(DefaultLayers.Opaque));
-            EntityManager.Add(sprite);
+            ////Entity sprite = new Entity()
+            ////                    .AddComponent(new Transform2D()
+            ////                    {
+            ////                        XScale = (float)this.VirtualScreenManager.VirtualWidth / (float)texture.Width,
+            ////                        YScale = (float)this.VirtualScreenManager.VirtualHeight / (float)texture.Height,
+            ////                    })
+            ////                    .AddComponent(new Sprite(texture))
+            ////                    .AddComponent(new SpriteRenderer(DefaultLayers.Opaque));
+            ////EntityManager.Add(sprite);
 
             Entity virtualCamera = EntityManager.Find("VirtualCamera");
             virtualCamera.AddComponent(new ControllerBehavior());

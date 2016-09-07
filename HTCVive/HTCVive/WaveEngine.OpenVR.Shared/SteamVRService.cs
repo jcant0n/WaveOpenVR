@@ -39,7 +39,10 @@ namespace WaveEngine.OpenVR
                     uint index = 0;
                     index = hmd.GetTrackedDeviceIndexForControllerRole(ETrackedControllerRole.LeftHand);
 
-                    return Controllers[index];
+                    if (index > 0 && index < Valve.VR.OpenVR.k_unMaxTrackedDeviceCount)
+                    {
+                        return Controllers[index];
+                    }
                 }
 
                 return null;
@@ -55,7 +58,10 @@ namespace WaveEngine.OpenVR
                     uint index = 0;
                     index = hmd.GetTrackedDeviceIndexForControllerRole(ETrackedControllerRole.RightHand);
 
-                    return Controllers[index];
+                    if (index > 0 && index < Valve.VR.OpenVR.k_unMaxTrackedDeviceCount)
+                    {
+                        return Controllers[index];
+                    }
                 }
 
                 return null;
