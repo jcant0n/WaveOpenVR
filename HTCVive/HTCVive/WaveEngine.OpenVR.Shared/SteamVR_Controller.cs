@@ -1,6 +1,6 @@
 ﻿#region File Description
 //-----------------------------------------------------------------------------
-// Controller
+// SteamVR_Controller
 //
 // Copyright © 2016 Wave Engine S.L. All rights reserved.
 // Use is subject to license terms.
@@ -17,7 +17,7 @@ using WaveEngine.Framework.Services;
 
 namespace WaveEngine.OpenVR
 {
-    public class Controller
+    public class SteamVR_Controller
     {
         public float hairTriggerDelta = 0.1f; // amount trigger must be pulled or released to change state
         float hairTriggerLimit;
@@ -28,18 +28,25 @@ namespace WaveEngine.OpenVR
         int previousFrameCount = -1;
         Matrix transform;
         Clock clockService;
+        bool valid;
 
         #region Properties
-        public uint Index { get; private set; }
+        public bool Valid
+        {
+            get
+            {
+                return valid;
+            }
+        }
 
-        public bool Valid { get; private set; }
+        public uint Index { get; private set; }
 
         public bool Connected
         {
             get
             {
                 this.Update();
-                return pose.bDeviceIsConnected;
+                return valid && pose.bDeviceIsConnected;
             }
         }
 
@@ -48,7 +55,7 @@ namespace WaveEngine.OpenVR
             get
             {
                 this.Update();
-                return pose.bPoseIsValid;
+                return valid && pose.bPoseIsValid;
             }
         }
 
@@ -86,7 +93,12 @@ namespace WaveEngine.OpenVR
             get
             {
                 this.Update();
-                return new Vector3(pose.vVelocity.v0, pose.vVelocity.v1, pose.vVelocity.v2);
+                if (valid)
+                {
+                    return new Vector3(pose.vVelocity.v0, pose.vVelocity.v1, pose.vVelocity.v2);
+                }
+
+                return Vector3.Zero;
             }
         }
 
@@ -95,7 +107,12 @@ namespace WaveEngine.OpenVR
             get
             {
                 this.Update();
-                return new Vector3(-pose.vAngularVelocity.v0, -pose.vAngularVelocity.v1, pose.vAngularVelocity.v2);
+                if (valid)
+                {
+                    return new Vector3(-pose.vAngularVelocity.v0, -pose.vAngularVelocity.v1, pose.vAngularVelocity.v2);
+                }
+
+                return Vector3.Zero;
             }
         }
 
@@ -122,6 +139,7 @@ namespace WaveEngine.OpenVR
             get
             {
                 this.Update();
+
                 return this.pose;
             }
         }
@@ -134,19 +152,24 @@ namespace WaveEngine.OpenVR
                 var pose = this.pose.mDeviceToAbsoluteTracking;
 
                 this.transform.M11 = pose.m0;
-                this.transform.M12 = pose.m1;
-                this.transform.M13 = -pose.m2;
-                this.transform.M14 = pose.m3;
+                this.transform.M12 = pose.m4;
+                this.transform.M13 = -pose.m8;
+                this.transform.M14 = 0;
 
-                this.transform.M21 = pose.m4;
+                this.transform.M21 = pose.m1;
                 this.transform.M22 = pose.m5;
-                this.transform.M23 = -pose.m6;
-                this.transform.M24 = pose.m7;
+                this.transform.M23 = -pose.m9;
+                this.transform.M24 = 0;
 
-                this.transform.M31 = -pose.m8;
-                this.transform.M32 = -pose.m9;
+                this.transform.M31 = -pose.m2;
+                this.transform.M32 = -pose.m6;
                 this.transform.M33 = pose.m10;
-                this.transform.M34 = -pose.m11;
+                this.transform.M34 = 0;
+
+                this.transform.M41 = pose.m3;
+                this.transform.M42 = pose.m7;
+                this.transform.M43 = -pose.m11;
+                this.transform.M44 = 1f;
 
                 return this.transform;
             }
@@ -154,7 +177,7 @@ namespace WaveEngine.OpenVR
         #endregion
 
         #region Initialize
-        public Controller(uint i)
+        public SteamVR_Controller(uint i)
         {
             this.Index = i;
             this.transform = new Matrix();
@@ -172,9 +195,9 @@ namespace WaveEngine.OpenVR
                 previousFrameCount = clockService.FrameCount;
                 prevState = currentState;
 
-                if (SteamVRService.hmd != null)
+                if (SteamVR_Service.hmd != null)
                 {
-                    Valid = SteamVRService.hmd.GetControllerStateWithPose(ETrackingUniverseOrigin.TrackingUniverseStanding, Index, ref this.currentState, ref this.pose);
+                    valid = SteamVR_Service.hmd.GetControllerStateWithPose(ETrackingUniverseOrigin.TrackingUniverseStanding, Index, ref this.currentState, ref this.pose);
                     UpdateHairTrigger();
                 }
             }
@@ -264,10 +287,10 @@ namespace WaveEngine.OpenVR
 
         public void TriggerHapticPulse(ushort durationMicroSec = 500, EVRButtonId buttonId = EVRButtonId.k_EButton_SteamVR_Touchpad)
         {
-            if (SteamVRService.hmd != null)
+            if (SteamVR_Service.hmd != null)
             {
                 var axisId = (uint)buttonId - (uint)EVRButtonId.k_EButton_Axis0;
-                SteamVRService.hmd.TriggerHapticPulse(Index, axisId, (char)durationMicroSec);
+                SteamVR_Service.hmd.TriggerHapticPulse(Index, axisId, (char)durationMicroSec);
             }
         }
 

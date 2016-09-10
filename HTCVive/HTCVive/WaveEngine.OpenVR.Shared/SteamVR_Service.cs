@@ -1,6 +1,6 @@
 ﻿#region File Description
 //-----------------------------------------------------------------------------
-// SteamVRService
+// SteamVR_Service
 //
 // Copyright © 2016 Wave Engine S.L. All rights reserved.
 // Use is subject to license terms.
@@ -11,15 +11,19 @@
 using System;
 using WaveEngine.Common;
 using System.Diagnostics;
-using Valve.VR;
 #endregion
 
 namespace WaveEngine.OpenVR
 {
-    public class SteamVRService : UpdatableService
+    using Valve.VR;
+
+    public class SteamVR_Service : UpdatableService
     {
-        public Controller[] Controllers;
         internal static CVRSystem hmd;
+        private SteamVR_ControllerManager controllerManager;
+
+        private TrackedDevicePose_t[] poses;
+        private TrackedDevicePose_t[] gamePoses;
 
         #region Properties
         public CVRSystem HMD
@@ -30,48 +34,23 @@ namespace WaveEngine.OpenVR
             }
         }
 
-        public Controller LeftHand
+        public SteamVR_ControllerManager ControllerManager
         {
             get
             {
-                if (hmd != null)
-                {
-                    uint index = 0;
-                    index = hmd.GetTrackedDeviceIndexForControllerRole(ETrackedControllerRole.LeftHand);
-
-                    if (index > 0 && index < Valve.VR.OpenVR.k_unMaxTrackedDeviceCount)
-                    {
-                        return Controllers[index];
-                    }
-                }
-
-                return null;
+                return controllerManager;
             }
         }
 
-        public Controller RightHand
-        {
-            get
-            {
-                if (hmd != null)
-                {
-                    uint index = 0;
-                    index = hmd.GetTrackedDeviceIndexForControllerRole(ETrackedControllerRole.RightHand);
-
-                    if (index > 0 && index < Valve.VR.OpenVR.k_unMaxTrackedDeviceCount)
-                    {
-                        return Controllers[index];
-                    }
-                }
-
-                return null;
-            }
-        }
         #endregion
 
         #region Initialize
-        public SteamVRService()
+        public SteamVR_Service()
         {
+            poses = new TrackedDevicePose_t[OpenVR.k_unMaxTrackedDeviceCount];
+            gamePoses = new TrackedDevicePose_t[0];
+
+            this.controllerManager = new SteamVR_ControllerManager();
         }
 
         #endregion
@@ -80,16 +59,15 @@ namespace WaveEngine.OpenVR
 
         public override void Update(TimeSpan gameTime)
         {
-            for (int i = 0; i < Valve.VR.OpenVR.k_unMaxTrackedDeviceCount; i++)
+            var compositor = OpenVR.Compositor;
+
+            if (compositor != null)
             {
-                this.Controllers[i].Update();
+                compositor.GetLastPoses(poses, gamePoses);
+                controllerManager.Update(poses);
             }
         }
 
-        public Controller Input(int index)
-        {
-            return Controllers[index];
-        }
         #endregion
 
         #region Private Methods
@@ -99,29 +77,42 @@ namespace WaveEngine.OpenVR
 
             var error = EVRInitError.None;
 
-            hmd = Valve.VR.OpenVR.Init(ref error);
+            bool initialized = true;
+            hmd = OpenVR.Init(ref error);
             if (error != EVRInitError.None)
             {
                 ReportError(error);
-                Valve.VR.OpenVR.Shutdown();
+                initialized = false;
             }
 
-            // Initialize devices
-            if (Controllers == null)
+            // Verify common interfaces are valid.
+            OpenVR.GetGenericInterface(OpenVR.IVRCompositor_Version, ref error);
+            if (error != EVRInitError.None)
             {
-                Controllers = new Controller[Valve.VR.OpenVR.k_unMaxTrackedDeviceCount];
-
-                for (uint i = 0; i < Controllers.Length; i++)
-                {
-                    Controllers[i] = new Controller(i);
-                }
+                ReportError(error);
+                initialized = false;
             }
+
+            OpenVR.GetGenericInterface(OpenVR.IVROverlay_Version, ref error);
+            if (error != EVRInitError.None)
+            {
+                ReportError(error);
+                initialized = false;
+            }
+
+            if (!initialized)
+            {
+                OpenVR.Shutdown();
+                return;
+            }
+
+            controllerManager.Initialize();
         }
 
         protected override void Terminate()
         {
             base.Terminate();
-            Valve.VR.OpenVR.Shutdown();
+            OpenVR.Shutdown();
         }
 
         private void ReportError(EVRInitError error)
@@ -140,7 +131,7 @@ namespace WaveEngine.OpenVR
                     Debug.WriteLine("SteamVR Initialization Failed!  Make sure device's runtime is up to date.");
                     break;
                 default:
-                    Debug.WriteLine(Valve.VR.OpenVR.GetStringForHmdError(error));
+                    Debug.WriteLine(OpenVR.GetStringForHmdError(error));
                     break;
             }
         }

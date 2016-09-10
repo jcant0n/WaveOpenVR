@@ -13,7 +13,8 @@ namespace HTCVive
     [DataContract]
     public class ControllerBehavior : Behavior
     {
-        SteamVRService steamVR;
+        [RequiredService]
+        SteamVR_Service steamVR;
 
         public ControllerBehavior()
         {
@@ -27,25 +28,23 @@ namespace HTCVive
         protected override void Initialize()
         {
             base.Initialize();
-
-            steamVR = WaveServices.GetService<SteamVRService>();
         }
 
         protected override void Update(TimeSpan gameTime)
         {
-            if (steamVR.RightHand != null && steamVR.RightHand.Connected)
-            {
-                Labels.Add("Right_Status", steamVR.RightHand.Connected);
-                Labels.Add("Right_Position", steamVR.RightHand.WorldTransform.Translation);
-                Labels.Add("Right_Orientation", steamVR.RightHand.WorldTransform.Orientation);
-            }
+            var index = steamVR.ControllerManager.GetDeviceIndex(SteamVR_ControllerManager.DeviceRelation.First, Valve.VR.ETrackedDeviceClass.Controller);
+            var controller = steamVR.ControllerManager.Input(index);
 
-            if (steamVR.LeftHand != null && steamVR.LeftHand.Connected)
+            if (controller != null && controller.Connected && controller.Valid && controller.HasTracking)
             {
-                Labels.Add("Left_Status", steamVR.LeftHand.Connected);
-                Labels.Add("Left_Position", steamVR.LeftHand.WorldTransform.Translation);
-                Labels.Add("Left_Orientation", steamVR.LeftHand.WorldTransform.Orientation);
+                PrintStatus(controller);
             }
+        }
+
+        private void PrintStatus(SteamVR_Controller controller)
+        {
+            Labels.Add("Controller_Position", controller.WorldTransform.Translation);
+            Labels.Add("Controller_Orientation", controller.WorldTransform.Orientation);
         }
     }
 }
