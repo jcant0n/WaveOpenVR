@@ -6,13 +6,14 @@
     <SharedGUID>78a89827-7863-44a7-8c6a-fe7a3f20036c</SharedGUID>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
-    <Import_RootNamespace>WaveEngine.OpenVR.Shared</Import_RootNamespace>
+    <Import_RootNamespace>WaveEngine.OpenVR</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)ButtonMask.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\ButtonMask.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\DeviceEventArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\NativeLibrary.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SteamVR_ControllerManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SteamVR_Controller.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)NativeLibrary.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)openvr_api.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SteamVR_Service.cs" />
   </ItemGroup>

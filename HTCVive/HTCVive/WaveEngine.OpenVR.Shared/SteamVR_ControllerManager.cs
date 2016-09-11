@@ -1,6 +1,6 @@
 ﻿#region File Description
 //-----------------------------------------------------------------------------
-// SteamVR_ControllerManager
+// SteamVR_DeviceManager
 //
 // Copyright © 2016 Wave Engine S.L. All rights reserved.
 // Use is subject to license terms.

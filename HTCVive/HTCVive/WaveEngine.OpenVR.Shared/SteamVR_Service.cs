@@ -15,6 +15,7 @@ using System.Diagnostics;
 
 namespace WaveEngine.OpenVR
 {
+    using Helpers;
     using Valve.VR;
 
     public class SteamVR_Service : UpdatableService
@@ -34,14 +35,75 @@ namespace WaveEngine.OpenVR
             }
         }
 
+        public CVRCompositor Compositor
+        {
+            get
+            {
+                return OpenVR.Compositor;
+            }
+        }
+
+        public CVROverlay Overlay
+        {
+            get
+            {
+                return OpenVR.Overlay;
+            }
+        }
+
         public SteamVR_ControllerManager ControllerManager
         {
             get
             {
-                return controllerManager;
+                return this.controllerManager;
             }
         }
 
+        public bool VRInitializing { get; private set; }
+
+        public bool VRCalibrating { get; private set; }
+
+        public bool VROutOfRange { get; private set; }
+
+        public string TrackingSystemName
+        {
+            get
+            {
+                return GetStringProperty(ETrackedDeviceProperty.Prop_TrackingSystemName_String);
+            }
+        }
+
+        public string ModelNumber
+        {
+            get
+            {
+                return GetStringProperty(ETrackedDeviceProperty.Prop_ModelNumber_String);
+            }
+        }
+
+        public string SerialNumber
+        {
+            get
+            {
+                return GetStringProperty(ETrackedDeviceProperty.Prop_SerialNumber_String);
+            }
+        }
+
+        public float SecondsFromVsyncToPhotons
+        {
+            get
+            {
+                return GetFloatProperty(ETrackedDeviceProperty.Prop_SecondsFromVsyncToPhotons_Float);
+            }
+        }
+
+        public float DisplayFrequency
+        {
+            get
+            {
+                return GetFloatProperty(ETrackedDeviceProperty.Prop_DisplayFrequency_Float);
+            }
+        }
         #endregion
 
         #region Initialize
@@ -63,8 +125,36 @@ namespace WaveEngine.OpenVR
 
             if (compositor != null)
             {
+
                 compositor.GetLastPoses(poses, gamePoses);
                 controllerManager.Update(poses);
+
+                if (poses.Length > OpenVR.k_unTrackedDeviceIndex_Hmd)
+                {
+                    var result = poses[OpenVR.k_unTrackedDeviceIndex_Hmd].eTrackingResult;
+
+                    var initializing = result == ETrackingResult.Uninitialized;
+                    if (initializing != this.VRInitializing)
+                    {
+                        this.VRInitializing = initializing;
+                    }
+
+                    var calibrating =
+                        result == ETrackingResult.Calibrating_InProgress ||
+                        result == ETrackingResult.Calibrating_OutOfRange;
+                    if (calibrating != this.VRCalibrating)
+                    {
+                        this.VRCalibrating = calibrating;
+                    }
+
+                    var outOfRange =
+                        result == ETrackingResult.Running_OutOfRange ||
+                        result == ETrackingResult.Calibrating_OutOfRange;
+                    if (outOfRange != this.VROutOfRange)
+                    {
+                        this.VROutOfRange = outOfRange;
+                    }
+                }
             }
         }
 
@@ -135,6 +225,27 @@ namespace WaveEngine.OpenVR
                     break;
             }
         }
+
+
+        private string GetStringProperty(ETrackedDeviceProperty prop)
+        {
+            var error = ETrackedPropertyError.TrackedProp_Success;
+            var capactiy = hmd.GetStringTrackedDeviceProperty(OpenVR.k_unTrackedDeviceIndex_Hmd, prop, null, 0, ref error);
+            if (capactiy > 1)
+            {
+                var result = new System.Text.StringBuilder((int)capactiy);
+                hmd.GetStringTrackedDeviceProperty(OpenVR.k_unTrackedDeviceIndex_Hmd, prop, result, capactiy, ref error);
+                return result.ToString();
+            }
+            return (error != ETrackedPropertyError.TrackedProp_Success) ? error.ToString() : "<unknown>";
+        }
+
+        private float GetFloatProperty(ETrackedDeviceProperty prop)
+        {
+            var error = ETrackedPropertyError.TrackedProp_Success;
+            return hmd.GetFloatTrackedDeviceProperty(OpenVR.k_unTrackedDeviceIndex_Hmd, prop, ref error);
+        }
+
         #endregion
     }
 }

@@ -32,19 +32,19 @@ namespace HTCVive
 
         protected override void Update(TimeSpan gameTime)
         {
-            var index = steamVR.ControllerManager.GetDeviceIndex(SteamVR_ControllerManager.DeviceRelation.First, Valve.VR.ETrackedDeviceClass.Controller);
-            var controller = steamVR.ControllerManager.Input(index);
+            //var index = steamVR.ControllerManager.GetDeviceIndex(SteamVR_ControllerManager.DeviceRelation.First, Valve.VR.ETrackedDeviceClass.Controller);
+            //var controller = steamVR.ControllerManager.Input(index);
 
-            if (controller != null && controller.Connected && controller.Valid && controller.HasTracking)
-            {
-                PrintStatus(controller);
-            }
+            //if (controller != null && controller.Connected && controller.Valid && controller.HasTracking)
+            //{
+            //    PrintStatus(controller);
+            //}
         }
 
         private void PrintStatus(SteamVR_Controller controller)
         {
-            Labels.Add("Controller_Position", controller.WorldTransform.Translation);
-            Labels.Add("Controller_Orientation", controller.WorldTransform.Orientation);
+            //Labels.Add("Controller_Position", controller.WorldTransform.Translation);
+            //Labels.Add("Controller_Orientation", controller.WorldTransform.Orientation);
         }
     }
 }

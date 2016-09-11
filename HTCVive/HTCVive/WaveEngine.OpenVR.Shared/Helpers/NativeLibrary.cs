@@ -16,7 +16,7 @@ using System.Security;
 using WaveEngine.Common;
 #endregion
 
-namespace WaveEngine.OpenVR
+namespace WaveEngine.OpenVR.Helpers
 {
     /// <summary>
     /// This static class is used to load the native libraries.
