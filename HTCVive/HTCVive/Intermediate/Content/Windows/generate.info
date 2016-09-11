@@ -1,4 +1,19 @@
 ﻿<GenerateInfo xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="WaveEditor.Exporter.Model">
-  <files xmlns:d2p1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <files xmlns:d2p1="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+    <d2p1:KeyValueOfstringFileHashesH8kexHFU>
+      <d2p1:Key>C:/Users/plain/Documents/WaveOpenVR/HTCVive/HTCVive/Content/Assets/onepointfive_texture.png#WaveEditor.Exporter.Exporters.TextureExporter</d2p1:Key>
+      <d2p1:Value>
+        <FileHash>fc1f17927ab76068380458ff248c0864</FileHash>
+        <WinfoHash>38a9a0acd2a2857385ac9078e936f5d1</WinfoHash>
+      </d2p1:Value>
+    </d2p1:KeyValueOfstringFileHashesH8kexHFU>
+    <d2p1:KeyValueOfstringFileHashesH8kexHFU>
+      <d2p1:Key>C:/Users/plain/Documents/WaveOpenVR/HTCVive/HTCVive/Content/Assets/vr_controller_vive_1_5.obj#WaveEditor.Exporter.Exporters.StaticModelExporter</d2p1:Key>
+      <d2p1:Value>
+        <FileHash>7cd41df783fc15110955bda52fff94fe</FileHash>
+        <WinfoHash>26021c4f421695a16bcd3e009daa85e9</WinfoHash>
+      </d2p1:Value>
+    </d2p1:KeyValueOfstringFileHashesH8kexHFU>
+  </files>
   <id>BFEBFBFF000306C3</id>
 </GenerateInfo>

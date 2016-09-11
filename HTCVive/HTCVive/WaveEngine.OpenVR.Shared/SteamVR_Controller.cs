@@ -86,8 +86,6 @@ namespace WaveEngine.OpenVR
             }
         }
 
-        // Transform
-
         public Vector3 Velocity
         {
             get
@@ -153,22 +151,22 @@ namespace WaveEngine.OpenVR
 
                 this.transform.M11 = pose.m0;
                 this.transform.M12 = pose.m4;
-                this.transform.M13 = -pose.m8;
+                this.transform.M13 = pose.m8; //
                 this.transform.M14 = 0;
 
                 this.transform.M21 = pose.m1;
                 this.transform.M22 = pose.m5;
-                this.transform.M23 = -pose.m9;
+                this.transform.M23 = pose.m9; //
                 this.transform.M24 = 0;
 
-                this.transform.M31 = -pose.m2;
-                this.transform.M32 = -pose.m6;
+                this.transform.M31 = pose.m2;
+                this.transform.M32 = pose.m6; //
                 this.transform.M33 = pose.m10;
                 this.transform.M34 = 0;
 
                 this.transform.M41 = pose.m3;
                 this.transform.M42 = pose.m7;
-                this.transform.M43 = -pose.m11;
+                this.transform.M43 = pose.m11; //
                 this.transform.M44 = 1f;
 
                 return this.transform;

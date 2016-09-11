@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// File generated on 10/09/2016 21:58:42
+// File generated on 11/09/2016 16:26:57
 namespace HTCVive
 {
     using System;
@@ -16,6 +16,19 @@ namespace HTCVive
     
     public sealed class WaveContent
     {
+        
+        public sealed class Assets
+        {
+            
+            /// <summary> Path to Content/Assets/onepointfive_texture.png </summary>
+            public const string onepointfive_texture_png = "Content/Assets/onepointfive_texture.png";
+            
+            /// <summary> Path to Content/Assets/vr_controller_vive_1_5.obj </summary>
+            public const string vr_controller_vive_1_5_obj = "Content/Assets/vr_controller_vive_1_5.obj";
+            
+            /// <summary> Path to Content/Assets/MyMaterial.wmat </summary>
+            public const string MyMaterial = "Content/Assets/MyMaterial.wmat";
+        }
         
         public sealed class Scenes
         {

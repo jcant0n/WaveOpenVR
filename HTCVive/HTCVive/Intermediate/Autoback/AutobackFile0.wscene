@@ -10,10 +10,10 @@
       <d2p1:SerializeComponents xmlns:d4p1="WaveEngine.Framework">
         <d4p1:Component xmlns:d5p1="WaveEngine.Framework.Graphics" i:type="d5p1:Transform3D">
           <d5p1:LocalOrientation xmlns:d6p1="WaveEngine.Common.Math">
-            <d6p1:W>-4.03840765E-08</d6p1:W>
-            <d6p1:X>1.67275775E-08</d6p1:X>
-            <d6p1:Y>-0.92388</d6p1:Y>
-            <d6p1:Z>-0.382682353</d6p1:Z>
+            <d6p1:W>0.294313341</d6p1:W>
+            <d6p1:X>-0.7105381</d6p1:X>
+            <d6p1:Y>0.590499759</d6p1:Y>
+            <d6p1:Z>0.2445922</d6p1:Z>
           </d5p1:LocalOrientation>
           <d5p1:LocalPosition xmlns:d6p1="WaveEngine.Common.Math">
             <d6p1:X>-1.02072562E-07</d6p1:X>
@@ -161,7 +161,7 @@
           <d5p1:ClearFlags>All</d5p1:ClearFlags>
           <d5p1:FarPlane>1000</d5p1:FarPlane>
           <d5p1:FieldOfView>0</d5p1:FieldOfView>
-          <d5p1:IsActive>true</d5p1:IsActive>
+          <d5p1:IsActive>false</d5p1:IsActive>
           <d5p1:LayerMaskDefaultValue>true</d5p1:LayerMaskDefaultValue>
           <d5p1:NearPlane>-1000</d5p1:NearPlane>
           <d5p1:UpVector xmlns:d6p1="WaveEngine.Common.Math">

@@ -1,0 +1,40 @@
+﻿<GenerateInfo xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="WaveEditor.Exporter.Model">
+  <files xmlns:d2p1="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+    <d2p1:KeyValueOfstringFileHashesH8kexHFU>
+      <d2p1:Key>C:/Users/plain/Documents/WaveOpenVR/HTCVive/HTCVive/Content/Assets/steam_controller_02_freeman.obj#WaveEditor.Exporter.Exporters.StaticModelExporter</d2p1:Key>
+      <d2p1:Value>
+        <FileHash>6ba0fe36960e835832babfbd55fdee07</FileHash>
+        <WinfoHash>73d6ea96528379a88832d339e763e07d</WinfoHash>
+      </d2p1:Value>
+    </d2p1:KeyValueOfstringFileHashesH8kexHFU>
+    <d2p1:KeyValueOfstringFileHashesH8kexHFU>
+      <d2p1:Key>C:/Users/plain/Documents/WaveOpenVR/HTCVive/HTCVive/Content/Assets/onepointfive_texture.png#WaveEditor.Exporter.Exporters.TextureExporter</d2p1:Key>
+      <d2p1:Value>
+        <FileHash>fc1f17927ab76068380458ff248c0864</FileHash>
+        <WinfoHash>38a9a0acd2a2857385ac9078e936f5d1</WinfoHash>
+      </d2p1:Value>
+    </d2p1:KeyValueOfstringFileHashesH8kexHFU>
+    <d2p1:KeyValueOfstringFileHashesH8kexHFU>
+      <d2p1:Key>C:/Users/plain/Documents/WaveOpenVR/HTCVive/HTCVive/Content/Assets/onepointfive_spec.png#WaveEditor.Exporter.Exporters.TextureExporter</d2p1:Key>
+      <d2p1:Value>
+        <FileHash>d665ea1742dd0e66eff53a0d224f6c59</FileHash>
+        <WinfoHash>ad8517c01c23d3953342408a39011ea4</WinfoHash>
+      </d2p1:Value>
+    </d2p1:KeyValueOfstringFileHashesH8kexHFU>
+    <d2p1:KeyValueOfstringFileHashesH8kexHFU>
+      <d2p1:Key>C:/Users/plain/Documents/WaveOpenVR/HTCVive/HTCVive/Content/Assets/vr_controller_vive_1_5.obj#WaveEditor.Exporter.Exporters.StaticModelExporter</d2p1:Key>
+      <d2p1:Value>
+        <FileHash>7cd41df783fc15110955bda52fff94fe</FileHash>
+        <WinfoHash>26021c4f421695a16bcd3e009daa85e9</WinfoHash>
+      </d2p1:Value>
+    </d2p1:KeyValueOfstringFileHashesH8kexHFU>
+    <d2p1:KeyValueOfstringFileHashesH8kexHFU>
+      <d2p1:Key>C:/Users/plain/Documents/WaveOpenVR/HTCVive/HTCVive/Content/Assets/steam_controller_03_gordon.obj#WaveEditor.Exporter.Exporters.StaticModelExporter</d2p1:Key>
+      <d2p1:Value>
+        <FileHash>9785a017c573f07454c31dd734864b8b</FileHash>
+        <WinfoHash>073209af44b7255f37dedc36d4eb2799</WinfoHash>
+      </d2p1:Value>
+    </d2p1:KeyValueOfstringFileHashesH8kexHFU>
+  </files>
+  <id>BFEBFBFF000306C3</id>
+</GenerateInfo>

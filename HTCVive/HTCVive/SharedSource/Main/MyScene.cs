@@ -35,8 +35,10 @@ namespace HTCVive
             ////                    .AddComponent(new SpriteRenderer(DefaultLayers.Opaque));
             ////EntityManager.Add(sprite);
 
-            Entity virtualCamera = EntityManager.Find("VirtualCamera");
-            virtualCamera.AddComponent(new ControllerBehavior());
+            Entity virtualCamera = EntityManager.Find("Controller");
+            virtualCamera
+                .AddComponent(new ControllerUpdater())
+                .AddComponent(new ControllerDrawable());
         }
     }
 }

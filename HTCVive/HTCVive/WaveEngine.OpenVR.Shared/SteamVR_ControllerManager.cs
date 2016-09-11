@@ -26,9 +26,6 @@ namespace WaveEngine.OpenVR
         private uint leftIndex;
         private uint rightIndex;
 
-        public event EventHandler<uint> OnControllerConnected;
-        public event EventHandler<uint> OnControllerDisconnected;
-
         public enum DeviceRelation
         {
             First,
@@ -80,7 +77,7 @@ namespace WaveEngine.OpenVR
 
         public SteamVR_Controller Input(int index)
         {
-            if (index > -1 && index < OpenVR.k_unMaxTrackedDeviceCount)
+            if ((int)index > -1 && index < OpenVR.k_unMaxTrackedDeviceCount)
             {
                 return Controllers[index];
             }
@@ -154,12 +151,12 @@ namespace WaveEngine.OpenVR
 
         internal void Update(TrackedDevicePose_t[] poses)
         {
-            for (int i = 0; i < poses.Length; i++)
+            for (uint i = 0; i < poses.Length; i++)
             {
                 var connected = poses[i].bDeviceIsConnected;
                 if (connected != this.Connected[i])
                 {
-                    this.OnDeviceChanged(this, (uint)i, connected);
+                    this.OnDeviceChanged(this, i, connected);
                 }
             }
 
@@ -185,7 +182,7 @@ namespace WaveEngine.OpenVR
                 if (hmd != null && hmd.GetTrackedDeviceClass(index) == ETrackedDeviceClass.Controller)
                 {
                     this.Connected[index] = true;
-                    changed = !changed;
+                    changed = !changed; 
                 }
             }
 
@@ -194,14 +191,17 @@ namespace WaveEngine.OpenVR
                 leftIndex = hmd.GetTrackedDeviceIndexForControllerRole(ETrackedControllerRole.LeftHand);
                 rightIndex = hmd.GetTrackedDeviceIndexForControllerRole(ETrackedControllerRole.RightHand);
 
-                
-                if (connected)
+                // If neither role has been assigned yet, try hooking up at least the right controller.
+                if (leftIndex == OpenVR.k_unTrackedDeviceIndexInvalid && rightIndex == OpenVR.k_unTrackedDeviceIndexInvalid)
                 {
-                    OnControllerConnected?.Invoke(null, index);
-                }
-                else
-                {
-                    OnControllerDisconnected?.Invoke(null, index);
+                    for (int i = 0; i < Connected.Length; i++)
+                    {
+                        if (Connected[i])
+                        {
+                            rightIndex = (uint)i;
+                            break;
+                        }
+                    }
                 }
             }
         }
