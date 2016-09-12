@@ -41,7 +41,7 @@ namespace HTCVive
 
         public override void Draw(TimeSpan gameTime)
         {
-            int index = steamVR.ControllerManager.GetDeviceIndex(SteamVR_ControllerManager.DeviceRelation.First, Valve.VR.ETrackedDeviceClass.Controller);
+            int index = steamVR.ControllerManager.GetDeviceIndex(SteamVR_ControllerManager.DeviceRelation.First);
             var controller = steamVR.ControllerManager.Input(index);
 
             if(controller == null)

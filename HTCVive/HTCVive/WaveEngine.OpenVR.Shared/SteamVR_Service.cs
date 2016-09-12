@@ -23,8 +23,12 @@ namespace WaveEngine.OpenVR
         internal static CVRSystem hmd;
         private SteamVR_ControllerManager controllerManager;
 
+        private bool[] connected;
         private TrackedDevicePose_t[] poses;
         private TrackedDevicePose_t[] gamePoses;
+
+        // Events
+        public event EventHandler<DeviceEventArgs> OnDeviceChanged;
 
         #region Properties
         public CVRSystem HMD
@@ -109,10 +113,11 @@ namespace WaveEngine.OpenVR
         #region Initialize
         public SteamVR_Service()
         {
+            connected = new bool[OpenVR.k_unMaxTrackedDeviceCount];
             poses = new TrackedDevicePose_t[OpenVR.k_unMaxTrackedDeviceCount];
             gamePoses = new TrackedDevicePose_t[0];
 
-            this.controllerManager = new SteamVR_ControllerManager();
+            this.controllerManager = new SteamVR_ControllerManager(this);
         }
 
         #endregion
@@ -127,7 +132,18 @@ namespace WaveEngine.OpenVR
             {
 
                 compositor.GetLastPoses(poses, gamePoses);
-                controllerManager.Update(poses);
+
+                for (uint i = 0; i < poses.Length; i++)
+                {
+                    var connected = poses[i].bDeviceIsConnected;
+                    if (connected != this.connected[i])
+                    {
+                        this.connected[i] = connected;
+                        this.OnDeviceChanged?.Invoke(this, new DeviceEventArgs(i, connected));
+                    }
+                }
+
+                this.controllerManager.Update();
 
                 if (poses.Length > OpenVR.k_unTrackedDeviceIndex_Hmd)
                 {

@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>HTCVive_2</name>
+    </assembly>
+    <members>
+        <member name="M:HTCVive.App.OnActivated">
+            <summary>
+            Called when [activated].
+            </summary>
+        </member>
+        <member name="M:HTCVive.App.OnDeactivate">
+            <summary>
+            Called when [deactivate].
+            </summary>
+        </member>
+        <member name="F:HTCVive.GridRenderer.MAXLINES">
+            <summary>
+            The maxlines
+            </summary>
+        </member>
+        <member name="F:HTCVive.GridRenderer.lines">
+            <summary>
+            The lines
+            </summary>
+        </member>
+        <member name="F:HTCVive.GridRenderer.line">
+            <summary>
+            The line
+            </summary>
+        </member>
+        <member name="F:HTCVive.GridRenderer.lineBatch">
+            <summary>
+            The layer
+            </summary>
+        </member>
+        <member name="F:HTCVive.WaveContent.Assets.onepointfive_texture_png">
+            <summary> Path to Content/Assets/onepointfive_texture.png </summary>
+        </member>
+        <member name="F:HTCVive.WaveContent.Assets.vr_controller_vive_1_5_obj">
+            <summary> Path to Content/Assets/vr_controller_vive_1_5.obj </summary>
+        </member>
+        <member name="F:HTCVive.WaveContent.Assets.MyMaterial">
+            <summary> Path to Content/Assets/MyMaterial.wmat </summary>
+        </member>
+        <member name="F:HTCVive.WaveContent.Scenes.MyScene">
+            <summary> Path to Content/Scenes/MyScene.wscene </summary>
+        </member>
+    </members>
+</doc>

@@ -18,8 +18,16 @@ namespace HTCVive
         [RequiredService]
         public SteamVR_Service steamVR;
 
-        public ControllerUpdater()
+        public enum ControllerType
         {
+            Right,
+            Left,
+        }
+        private ControllerType type;
+
+        public ControllerUpdater(ControllerType type)
+        {
+            this.type = type;
         }
 
         protected override void DefaultValues() 
@@ -34,8 +42,9 @@ namespace HTCVive
 
         protected override void Update(TimeSpan gameTime)
         {
-            int index = steamVR.ControllerManager.GetDeviceIndex(SteamVR_ControllerManager.DeviceRelation.First, Valve.VR.ETrackedDeviceClass.Controller);
-            var controller = steamVR.ControllerManager.Input(index);
+            //int index = steamVR.ControllerManager.GetDeviceIndex(SteamVR_ControllerManager.DeviceRelation.First, Valve.VR.ETrackedDeviceClass.Controller);
+            SteamVR_Controller controller;
+            controller = type == ControllerType.Right ? steamVR.ControllerManager.RightHand : steamVR.ControllerManager.LeftHand;
 
             Owner.IsVisible = controller != null;
 

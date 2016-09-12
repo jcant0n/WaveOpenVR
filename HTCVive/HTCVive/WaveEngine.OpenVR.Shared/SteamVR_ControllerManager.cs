@@ -16,13 +16,15 @@ using WaveEngine.Framework.Services;
 
 namespace WaveEngine.OpenVR
 {
+    using Helpers;
+    using System.Collections.Generic;
     using Valve.VR;
 
     public class SteamVR_ControllerManager
     {
         public SteamVR_Controller[] Controllers;
-        public bool[] Connected;
 
+        private bool[] connected; // Only Controllers
         private uint leftIndex;
         private uint rightIndex;
 
@@ -62,13 +64,29 @@ namespace WaveEngine.OpenVR
                 return null;
             }
         }
+
+        public IEnumerable<SteamVR_Controller> ControllerList
+        {
+            get
+            {
+                for (int i = 0; i < connected.Length; i++)
+                {
+                    if (connected[i])
+                    {
+                        yield return Controllers[i];
+                    }
+                }
+            }
+        }
         #endregion
 
         #region Initialize
-        public SteamVR_ControllerManager()
+        public SteamVR_ControllerManager(SteamVR_Service service)
         {
             leftIndex = OpenVR.k_unTrackedDeviceIndexInvalid;
             rightIndex = OpenVR.k_unTrackedDeviceIndexInvalid;
+
+            service.OnDeviceChanged += OnDeviceChanged;
         }
 
         #endregion
@@ -149,17 +167,8 @@ namespace WaveEngine.OpenVR
             return result;
         }
 
-        internal void Update(TrackedDevicePose_t[] poses)
+        internal void Update()
         {
-            for (uint i = 0; i < poses.Length; i++)
-            {
-                var connected = poses[i].bDeviceIsConnected;
-                if (connected != this.Connected[i])
-                {
-                    this.OnDeviceChanged(this, i, connected);
-                }
-            }
-
             // Update all controllers
             for (int i = 0; i < OpenVR.k_unMaxTrackedDeviceCount; i++)
             {
@@ -170,18 +179,19 @@ namespace WaveEngine.OpenVR
         #endregion
 
         #region Private Methods
-        private void OnDeviceChanged(object sender, uint index, bool connected)
+
+        private void OnDeviceChanged(object sender, DeviceEventArgs e)
         {
-            bool changed = this.Connected[index];
-            this.Connected[index] = false;
+            bool changed = this.connected[e.Index];
+            this.connected[e.Index] = false;
 
             var hmd = SteamVR_Service.hmd;
 
-            if (connected)
+            if (e.Connected)
             {
-                if (hmd != null && hmd.GetTrackedDeviceClass(index) == ETrackedDeviceClass.Controller)
+                if (hmd != null && hmd.GetTrackedDeviceClass(e.Index) == ETrackedDeviceClass.Controller)
                 {
-                    this.Connected[index] = true;
+                    this.connected[e.Index] = true;
                     changed = !changed; 
                 }
             }
@@ -194,9 +204,9 @@ namespace WaveEngine.OpenVR
                 // If neither role has been assigned yet, try hooking up at least the right controller.
                 if (leftIndex == OpenVR.k_unTrackedDeviceIndexInvalid && rightIndex == OpenVR.k_unTrackedDeviceIndexInvalid)
                 {
-                    for (int i = 0; i < Connected.Length; i++)
+                    for (int i = 0; i < this.connected.Length; i++)
                     {
-                        if (Connected[i])
+                        if (this.connected[i])
                         {
                             rightIndex = (uint)i;
                             break;
@@ -210,7 +220,7 @@ namespace WaveEngine.OpenVR
         {
             if (Controllers == null)
             {
-                Connected = new bool[OpenVR.k_unMaxTrackedDeviceCount];
+                connected = new bool[OpenVR.k_unMaxTrackedDeviceCount];
                 Controllers = new SteamVR_Controller[OpenVR.k_unMaxTrackedDeviceCount];
 
                 for (uint i = 0; i < Controllers.Length; i++)

@@ -37,26 +37,13 @@ namespace HTCVive
             //                    .AddComponent(new SpriteRenderer(DefaultLayers.Opaque));
             //EntityManager.Add(sprite);
 
-            Entity virtualCamera = EntityManager.Find("Controller");
-            virtualCamera
-                .AddComponent(new ControllerUpdater())
+            Entity right = EntityManager.Find("RightController");
+            right.AddComponent(new ControllerUpdater(ControllerUpdater.ControllerType.Right))
                 .AddComponent(new ControllerDrawable());
-        }
 
-        protected override void Start()
-        {
-            base.Start();
-
-            var steamVR = WaveServices.GetService<SteamVR_Service>();
-
-            if (steamVR != null)
-            {
-                Labels.Add("TrackingSystemName", steamVR.TrackingSystemName);
-                Labels.Add("ModelNumber", steamVR.ModelNumber);
-                Labels.Add("SerialNumber", steamVR.SerialNumber);
-                Labels.Add("SecondsFromVsyncToPhotons", steamVR.SecondsFromVsyncToPhotons);
-                Labels.Add("DisplayFrequency", steamVR.DisplayFrequency);
-            }
+            Entity left = EntityManager.Find("LeftController");
+            left.AddComponent(new ControllerUpdater(ControllerUpdater.ControllerType.Left))
+                .AddComponent(new ControllerDrawable());
         }
     }
 }
